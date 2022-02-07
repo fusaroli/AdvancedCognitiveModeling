@@ -306,7 +306,7 @@ A random agent might be perfectly random (50% chance of choosing “head,” sam
 <span id="cb8-39"><a href="practical-exercise-2---from-verbal-to-formal-models.html#cb8-39" aria-hidden="true" tabindex="-1"></a>}</span>
 <span id="cb8-40"><a href="practical-exercise-2---from-verbal-to-formal-models.html#cb8-40" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-41"><a href="practical-exercise-2---from-verbal-to-formal-models.html#cb8-41" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(Self <span class="sc">==</span> Other)</span></code></pre></div>
-<pre><code>## [1] 83</code></pre>
+<pre><code>## [1] 76</code></pre>
 <div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="practical-exercise-2---from-verbal-to-formal-models.html#cb10-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">tibble</span>(Self, Other, <span class="at">trial =</span> <span class="fu">seq</span>(trials), <span class="at">Feedback =</span> <span class="fu">as.numeric</span>(Self<span class="sc">==</span>Other))</span>
 <span id="cb10-2"><a href="practical-exercise-2---from-verbal-to-formal-models.html#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb10-3"><a href="practical-exercise-2---from-verbal-to-formal-models.html#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(df) <span class="sc">+</span> <span class="fu">theme_classic</span>() <span class="sc">+</span></span>
@@ -364,9 +364,29 @@ A random agent might be perfectly random (50% chance of choosing “head,” sam
 <div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="practical-exercise-2---from-verbal-to-formal-models.html#cb18-1" aria-hidden="true" tabindex="-1"></a>trials <span class="ot">=</span> <span class="dv">120</span></span>
 <span id="cb18-2"><a href="practical-exercise-2---from-verbal-to-formal-models.html#cb18-2" aria-hidden="true" tabindex="-1"></a>agents <span class="ot">=</span> <span class="dv">100</span></span>
 <span id="cb18-3"><a href="practical-exercise-2---from-verbal-to-formal-models.html#cb18-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-4"><a href="practical-exercise-2---from-verbal-to-formal-models.html#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (agent <span class="cf">in</span> <span class="fu">seq</span>(agents)){</span>
-<span id="cb18-5"><a href="practical-exercise-2---from-verbal-to-formal-models.html#cb18-5" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb18-6"><a href="practical-exercise-2---from-verbal-to-formal-models.html#cb18-6" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<span id="cb18-4"><a href="practical-exercise-2---from-verbal-to-formal-models.html#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (rate <span class="cf">in</span> <span class="fu">seq</span>(<span class="at">from=</span><span class="fl">0.5</span>, <span class="at">to=</span><span class="dv">1</span>, <span class="at">by=</span><span class="fl">0.05</span>)){</span>
+<span id="cb18-5"><a href="practical-exercise-2---from-verbal-to-formal-models.html#cb18-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-6"><a href="practical-exercise-2---from-verbal-to-formal-models.html#cb18-6" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (agent <span class="cf">in</span> <span class="fu">seq</span>(agents)){</span>
+<span id="cb18-7"><a href="practical-exercise-2---from-verbal-to-formal-models.html#cb18-7" aria-hidden="true" tabindex="-1"></a>  Self <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="cn">NA</span>, trials)</span>
+<span id="cb18-8"><a href="practical-exercise-2---from-verbal-to-formal-models.html#cb18-8" aria-hidden="true" tabindex="-1"></a>  Other <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="cn">NA</span>, trials)</span>
+<span id="cb18-9"><a href="practical-exercise-2---from-verbal-to-formal-models.html#cb18-9" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb18-10"><a href="practical-exercise-2---from-verbal-to-formal-models.html#cb18-10" aria-hidden="true" tabindex="-1"></a>  Self[<span class="dv">1</span>] <span class="ot">&lt;-</span> <span class="fu">RandomAgent_f</span>(<span class="dv">1</span>, <span class="fl">0.5</span>)</span>
+<span id="cb18-11"><a href="practical-exercise-2---from-verbal-to-formal-models.html#cb18-11" aria-hidden="true" tabindex="-1"></a>  Other <span class="ot">&lt;-</span> <span class="fu">RandomAgent_f</span>(<span class="fu">seq</span>(trials), rate)</span>
+<span id="cb18-12"><a href="practical-exercise-2---from-verbal-to-formal-models.html#cb18-12" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb18-13"><a href="practical-exercise-2---from-verbal-to-formal-models.html#cb18-13" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb18-14"><a href="practical-exercise-2---from-verbal-to-formal-models.html#cb18-14" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">2</span><span class="sc">:</span>trials){</span>
+<span id="cb18-15"><a href="practical-exercise-2---from-verbal-to-formal-models.html#cb18-15" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (Self[i<span class="dv">-1</span>] <span class="sc">==</span> Other[i<span class="dv">-1</span>]){</span>
+<span id="cb18-16"><a href="practical-exercise-2---from-verbal-to-formal-models.html#cb18-16" aria-hidden="true" tabindex="-1"></a>      Feedback <span class="ot">=</span> <span class="dv">1</span></span>
+<span id="cb18-17"><a href="practical-exercise-2---from-verbal-to-formal-models.html#cb18-17" aria-hidden="true" tabindex="-1"></a>    } <span class="cf">else</span> {Feedback <span class="ot">=</span> <span class="dv">0</span>}</span>
+<span id="cb18-18"><a href="practical-exercise-2---from-verbal-to-formal-models.html#cb18-18" aria-hidden="true" tabindex="-1"></a>    Self[i] <span class="ot">&lt;-</span> <span class="fu">WSLSAgent_f</span>(Self[i<span class="dv">-1</span>], Feedback)</span>
+<span id="cb18-19"><a href="practical-exercise-2---from-verbal-to-formal-models.html#cb18-19" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb18-20"><a href="practical-exercise-2---from-verbal-to-formal-models.html#cb18-20" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb18-21"><a href="practical-exercise-2---from-verbal-to-formal-models.html#cb18-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sum</span>(Self <span class="sc">==</span> Other)</span>
+<span id="cb18-22"><a href="practical-exercise-2---from-verbal-to-formal-models.html#cb18-22" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb18-23"><a href="practical-exercise-2---from-verbal-to-formal-models.html#cb18-23" aria-hidden="true" tabindex="-1"></a>  temp <span class="ot">&lt;-</span> <span class="fu">tibble</span>(Self, Other, <span class="at">trial =</span> <span class="fu">seq</span>(trials), <span class="at">Feedback =</span> <span class="fu">as.numeric</span>(Self<span class="sc">==</span>Other), agent, rate)</span>
+<span id="cb18-24"><a href="practical-exercise-2---from-verbal-to-formal-models.html#cb18-24" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb18-25"><a href="practical-exercise-2---from-verbal-to-formal-models.html#cb18-25" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (agent<span class="sc">==</span><span class="dv">1</span>){df <span class="ot">&lt;-</span> temp} <span class="cf">else</span> {df <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(df, temp)}</span>
+<span id="cb18-26"><a href="practical-exercise-2---from-verbal-to-formal-models.html#cb18-26" aria-hidden="true" tabindex="-1"></a>}}</span></code></pre></div>
 
 </div>
 </div>
