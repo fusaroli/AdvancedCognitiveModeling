@@ -1,0 +1,70 @@
+---
+title: "Advanced Cognitive Modeling - Practical Exercise 1"
+author: "RF"
+date: "2/4/2022"
+output: html_document
+---
+
+
+# Practical exercise 1 - Building verbal models of the matching pennies game
+
+## Trying out the game and collecting your own data
+
+Today's practical exercise is structured as follows:
+
+- In order to do computational models we need a phenomenon to study (and ideally some data), you will therefore undergo an experiment, which will provide you with two specific cognitive domains to describe (one for now, one for later), and data from yourselves.
+
+- You will now have to play the Matching Pennies Game against a series of different agents. In the Matching Pennies Game you and your opponent have to choose either "head" or "tail" of a penny. If you are the matcher, you win by choosing the same as your opponent. If you are the mismatcher, you win by choosing the opposite as your opponent.
+
+- Given you play against several agents the game can take a while. If you want to take a break or do it in two sessions, feel free!
+
+- Try to pay attention and aim at winning. As you play also try to figure out what kind of strategies might be at play for you and for the opponents. How are you deciding whether to choose head or tail? Feel free to take notes.
+
+- Now go to the address https://rely-verify.au.dk/room/SCSE/ insert your city ID and follow the instructions
+
+
+## Start Theorizing
+
+The goal of today's assignment is to build models of the strategies and cognitive processes underlying behavior in the matching pennies game. In other words, to build hypotheses as to how the data is generated. The goal is to: 
+1) get you more aware of the issue of theory building (and assessment); 
+2) identify a small set of verbal models that we can then formalise in mathematical cognitive models and algorithms for simulations and model fitting.
+
+First, let's take a little free discussion:
+- did you enjoy the game?
+- what was the game about?
+- did you notice differences about the different agents you played against?
+
+Now, let's take a bit of group discussion. Get together in groups, and discuss which strategies and cognitive processes might underly your and the agents' behaviours in the game. One thing to keep in mind is what a model is: a simplification that can help us make sense of the world. In other words,  any behavior is incredibly complex and involves many complex cognitive mechanisms. So start simple, and if you think it's too simple, progressively add simple components.
+
+
+Once your study group has discussed a few (during the PE), add them here:
+https://docs.google.com/document/d/1MXQPZWL8LPoOab2R_tYCE8iuewq7NLnFU5C-m3D9ru0/edit?usp=sharing
+
+
+Discussion of the different models. Discussion of the (bad?) distinction between strategy and cognitive process.
+
+
+Now go back to groups and discuss the issues with building models: why is it hard? which are the blind alleys? How does building models of matching pennies relate to cognitive models more in general?
+
+We can start formalize the models if we have time.
+
+
+## Strategies and cognitive constraints
+
+Random
+
+Random bias
+
+Win-Stay-Lose-Shift (no memory)
+
+Follow the data (perfect memory)
+
+Follow the data (with imperfect memory)
+
+Any of the previous ones, but doing the opposite (to mess w the opponent)
+
+Reinforcement learning
+
+k-ToM
+
+Cognitive constraints: memory, and errors

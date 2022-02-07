@@ -1,0 +1,14 @@
+advanced-cognitive-modeling
+the-goal-of-the-course
+list-of-lectures-and-practical-exercises
+preparation-before-the-course
+practical-exercise-1---building-verbal-models-of-the-matching-pennies-game
+trying-out-the-game-and-collecting-your-own-data
+start-theorizing
+strategies-and-cognitive-constraints
+practical-exercise-2---from-verbal-to-formal-models
+defining-general-conditions
+implementing-a-random-agent
+implementing-a-win-stay-lose-shift-agent
+now-we-scale-it-up
+practical-exercise-3---getting-into-stan
