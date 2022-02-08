@@ -1,6 +1,6 @@
 ---
-title: "Advanced Cognitive Modeling - Practical Exercise 2"
-author: "RF"
+title: "Advanced Cognitive Modeling"
+author: "Riccardo Fusaroli"
 date: "2/4/2022"
 output: html_document
 ---
