@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 2 Practical exercise 1 - Building verbal models of the matching pennies game | Advanced Cognitive Modeling</title>
+  <title>Chapter 2 Practical exercise 1 - Building verbal models of the matching pennies game | Advanced Cognitive Modeling Notes</title>
   <meta name="description" content="My notes for the advanced cognitive modeling course - 2022" />
   <meta name="generator" content="bookdown 0.24.1 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 2 Practical exercise 1 - Building verbal models of the matching pennies game | Advanced Cognitive Modeling" />
+  <meta property="og:title" content="Chapter 2 Practical exercise 1 - Building verbal models of the matching pennies game | Advanced Cognitive Modeling Notes" />
   <meta property="og:type" content="book" />
   
   
@@ -16,14 +16,15 @@
   <meta name="github-repo" content="openscapes/series" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 2 Practical exercise 1 - Building verbal models of the matching pennies game | Advanced Cognitive Modeling" />
+  <meta name="twitter:title" content="Chapter 2 Practical exercise 1 - Building verbal models of the matching pennies game | Advanced Cognitive Modeling Notes" />
   
   <meta name="twitter:description" content="My notes for the advanced cognitive modeling course - 2022" />
   
 
-<meta name="author" content="RF" />
+<meta name="author" content="Riccardo Fusaroli" />
 
 
+<meta name="date" content="2022-02-09" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -155,7 +156,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3.1" data-path="practical-exercise-2---from-verbal-to-formal-models.html"><a href="practical-exercise-2---from-verbal-to-formal-models.html#defining-general-conditions"><i class="fa fa-check"></i><b>3.1</b> Defining general conditions</a></li>
 <li class="chapter" data-level="3.2" data-path="practical-exercise-2---from-verbal-to-formal-models.html"><a href="practical-exercise-2---from-verbal-to-formal-models.html#implementing-a-random-agent"><i class="fa fa-check"></i><b>3.2</b> Implementing a random agent</a></li>
 <li class="chapter" data-level="3.3" data-path="practical-exercise-2---from-verbal-to-formal-models.html"><a href="practical-exercise-2---from-verbal-to-formal-models.html#implementing-a-win-stay-lose-shift-agent"><i class="fa fa-check"></i><b>3.3</b> Implementing a Win-Stay-Lose-Shift agent</a></li>
-<li class="chapter" data-level="3.4" data-path="practical-exercise-2---from-verbal-to-formal-models.html"><a href="practical-exercise-2---from-verbal-to-formal-models.html#now-we-scale-it-up"><i class="fa fa-check"></i><b>3.4</b> Now we scale it up</a></li>
+<li class="chapter" data-level="3.4" data-path="practical-exercise-2---from-verbal-to-formal-models.html"><a href="practical-exercise-2---from-verbal-to-formal-models.html#now-we-scale-it-up"><i class="fa fa-check"></i><b>3.4</b> Now we scale it up</a>
+<ul>
+<li class="chapter" data-level="3.4.1" data-path="practical-exercise-2---from-verbal-to-formal-models.html"><a href="practical-exercise-2---from-verbal-to-formal-models.html#and-we-visualize-it"><i class="fa fa-check"></i><b>3.4.1</b> And we visualize it</a></li>
+</ul></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="practical-exercise-3---getting-into-stan.html"><a href="practical-exercise-3---getting-into-stan.html"><i class="fa fa-check"></i><b>4</b> Practical exercise 3 - Getting into Stan</a></li>
 <li class="divider"></li>
@@ -170,7 +174,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <div class="body-inner">
         <div class="book-header" role="navigation">
           <h1>
-            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Advanced Cognitive Modeling</a>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Advanced Cognitive Modeling Notes</a>
           </h1>
         </div>
 
@@ -196,10 +200,46 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>The goal of today’s assignment is to build models of the strategies and cognitive processes underlying behavior in the matching pennies game. In other words, to build hypotheses as to how the data is generated. The goal is to:
 1) get you more aware of the issue of theory building (and assessment);
 2) identify a small set of verbal models that we can then formalise in mathematical cognitive models and algorithms for simulations and model fitting.</p>
-<p>First, let’s take a little free discussion:
-- did you enjoy the game?
-- what was the game about?
-- did you notice differences about the different agents you played against?</p>
+<p>First, let’s take a little free discussion:</p>
+<ul>
+<li><p>did you enjoy the game?</p></li>
+<li><p>what was the game about?</p></li>
+<li><p>did you notice differences about the different agents you played against?</p></li>
+</ul>
+<p>In any case, the different agents did. Look at the plots below, where the x axes indicate trial, the y axes how many points you scored (0 being chance, negative means being completely owned by the bots, positive owning the bot) and the different colors indicate different strategies employed by the bots.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="practical-exercise-1---building-verbal-models-of-the-matching-pennies-game.html#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div>
+<pre><code>## ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.1 ──</code></pre>
+<pre><code>## ✓ ggplot2 3.3.5     ✓ purrr   0.3.4
+## ✓ tibble  3.1.6     ✓ dplyr   1.0.7
+## ✓ tidyr   1.1.4     ✓ stringr 1.4.0
+## ✓ readr   2.1.2     ✓ forcats 0.5.1</code></pre>
+<pre><code>## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+## x dplyr::filter() masks stats::filter()
+## x dplyr::lag()    masks stats::lag()</code></pre>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="practical-exercise-1---building-verbal-models-of-the-matching-pennies-game.html#cb5-1" aria-hidden="true" tabindex="-1"></a>d <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;data/MP_MSc_CogSci22.csv&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb5-2"><a href="practical-exercise-1---building-verbal-models-of-the-matching-pennies-game.html#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">BotStrategy =</span> <span class="fu">as.factor</span>(BotStrategy))</span></code></pre></div>
+<pre><code>## Rows: 4400 Columns: 11</code></pre>
+<pre><code>## ── Column specification ────────────────────────────────────────────────────────
+## Delimiter: &quot;,&quot;
+## chr (2): ID, BotParameters
+## dbl (9): BotStrategyN, Role, player.tom_role, Choice, BotChoice, Payoff, Bot...
+## 
+## ℹ Use `spec()` to retrieve the full column specification for this data.
+## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="practical-exercise-1---building-verbal-models-of-the-matching-pennies-game.html#cb8-1" aria-hidden="true" tabindex="-1"></a>d<span class="sc">$</span>Role <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(d<span class="sc">$</span>Role<span class="sc">==</span><span class="dv">0</span>, <span class="st">&quot;Matcher&quot;</span>, <span class="st">&quot;Mismatcher&quot;</span>)</span>
+<span id="cb8-2"><a href="practical-exercise-1---building-verbal-models-of-the-matching-pennies-game.html#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-3"><a href="practical-exercise-1---building-verbal-models-of-the-matching-pennies-game.html#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(d, <span class="fu">aes</span>(Trial, Payoff, <span class="at">group=</span>BotStrategy, <span class="at">color=</span>BotStrategy)) <span class="sc">+</span><span class="fu">geom_smooth</span>(<span class="at">se=</span>F) <span class="sc">+</span> <span class="fu">theme_classic</span>() <span class="sc">+</span> <span class="fu">facet_wrap</span>(.<span class="sc">~</span>Role)</span></code></pre></div>
+<pre><code>## `geom_smooth()` using method = &#39;loess&#39; and formula &#39;y ~ x&#39;</code></pre>
+<p><img src="series_files/figure-html/plot%20collective%20performance%20in%20MP-1.png" width="672" /></p>
+<p>That doesn’t look too good, ah? What about individual variability? In the plot below we indicate the score of each of you, against the different bots.</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="practical-exercise-1---building-verbal-models-of-the-matching-pennies-game.html#cb10-1" aria-hidden="true" tabindex="-1"></a>d1 <span class="ot">&lt;-</span> d <span class="sc">%&gt;%</span> <span class="fu">group_by</span>(ID, BotStrategy) <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">summarize</span>(<span class="at">Score =</span> <span class="fu">sum</span>(Payoff))</span></code></pre></div>
+<pre><code>## `summarise()` has grouped output by &#39;ID&#39;. You can override using the `.groups`
+## argument.</code></pre>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="practical-exercise-1---building-verbal-models-of-the-matching-pennies-game.html#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(d1, <span class="fu">aes</span>(BotStrategy, Score, <span class="at">label=</span>ID)) <span class="sc">+</span></span>
+<span id="cb12-2"><a href="practical-exercise-1---building-verbal-models-of-the-matching-pennies-game.html#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">color=</span>ID)) <span class="sc">+</span></span>
+<span id="cb12-3"><a href="practical-exercise-1---building-verbal-models-of-the-matching-pennies-game.html#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">alpha=</span><span class="fl">0.3</span>) <span class="sc">+</span></span>
+<span id="cb12-4"><a href="practical-exercise-1---building-verbal-models-of-the-matching-pennies-game.html#cb12-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>()</span></code></pre></div>
+<p><img src="series_files/figure-html/plot%20individual%20performance%20in%20MP-1.png" width="672" /></p>
 <p>Now, let’s take a bit of group discussion. Get together in groups, and discuss which strategies and cognitive processes might underly your and the agents’ behaviours in the game. One thing to keep in mind is what a model is: a simplification that can help us make sense of the world. In other words, any behavior is incredibly complex and involves many complex cognitive mechanisms. So start simple, and if you think it’s too simple, progressively add simple components.</p>
 <p>Once your study group has discussed a few (during the PE), add them here:
 <a href="https://docs.google.com/document/d/1MXQPZWL8LPoOab2R_tYCE8iuewq7NLnFU5C-m3D9ru0/edit?usp=sharing" class="uri">https://docs.google.com/document/d/1MXQPZWL8LPoOab2R_tYCE8iuewq7NLnFU5C-m3D9ru0/edit?usp=sharing</a></p>
@@ -212,6 +252,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Random</p>
 <p>Random bias</p>
 <p>Win-Stay-Lose-Shift (no memory)</p>
+<p>Imperfect Win-Stay-Lose-Shift (80% of the time does that, the rest random)</p>
 <p>Follow the data (perfect memory)</p>
 <p>Follow the data (with imperfect memory)</p>
 <p>Any of the previous ones, but doing the opposite (to mess w the opponent)</p>

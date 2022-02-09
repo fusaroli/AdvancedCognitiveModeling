@@ -1,9 +1,4 @@
----
-title: "Advanced Cognitive Modeling "
-author: "Riccardo Fusaroli"
-date: "2/4/2022"
-output: html_document
----
+
 
 
 # Practical exercise 1 - Building verbal models of the matching pennies game
@@ -30,9 +25,39 @@ The goal of today's assignment is to build models of the strategies and cognitiv
 2) identify a small set of verbal models that we can then formalise in mathematical cognitive models and algorithms for simulations and model fitting.
 
 First, let's take a little free discussion:
+
 - did you enjoy the game?
+
 - what was the game about?
+
 - did you notice differences about the different agents you played against?
+
+In any case, the different agents did. Look at the plots below, where the x axes indicate trial, the y axes how many points you scored (0 being chance, negative means being completely owned by the bots, positive owning the bot) and the different colors indicate different strategies employed by the bots.
+
+```{r plot collective performance in MP}
+library(tidyverse)
+d <- read_csv("data/MP_MSc_CogSci22.csv") %>% 
+  mutate(BotStrategy = as.factor(BotStrategy))
+
+d$Role <- ifelse(d$Role==0, "Matcher", "Mismatcher")
+
+ggplot(d, aes(Trial, Payoff, group=BotStrategy, color=BotStrategy)) +geom_smooth(se=F) + theme_classic() + facet_wrap(.~Role)
+
+```
+
+
+That doesn't look too good, ah? What about individual variability? In the plot below we indicate the score of each of you, against the different bots.
+
+```{r plot individual performance in MP}
+d1 <- d %>% group_by(ID, BotStrategy) %>% dplyr::summarize(Score = sum(Payoff))
+
+ggplot(d1, aes(BotStrategy, Score, label=ID)) +
+  geom_point(aes(color=ID)) +
+  geom_boxplot(alpha=0.3) +
+  theme_classic()
+
+```
+
 
 Now, let's take a bit of group discussion. Get together in groups, and discuss which strategies and cognitive processes might underly your and the agents' behaviours in the game. One thing to keep in mind is what a model is: a simplification that can help us make sense of the world. In other words,  any behavior is incredibly complex and involves many complex cognitive mechanisms. So start simple, and if you think it's too simple, progressively add simple components.
 
@@ -56,6 +81,8 @@ Random
 Random bias
 
 Win-Stay-Lose-Shift (no memory)
+
+Imperfect Win-Stay-Lose-Shift (80% of the time does that, the rest random)
 
 Follow the data (perfect memory)
 

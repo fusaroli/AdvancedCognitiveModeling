@@ -1,14 +1,11 @@
----
-title: "Advanced Cognitive Modeling"
-author: "Riccardo Fusaroli"
-date: "2/4/2022"
-output: html_document
----
+
 
 # Practical exercise 3 - Getting into Stan
 
-We start our adventures in Stan with the simplest possible model. After observing the behavior of a Matching Pennies player a certain amount of trials n 
-Given a certain amount of trials n, we observe a certain amount of successes k. E.g. imagine testing your professor with a series of yees/no questions to assess their ability in cognitive modeling. The amount of questions is n, the amount of correct answers is k. Yet, we are not really interested in k. We are interested in the underlying ability of the professor to answer this kind of questions, as a proxy for their knowledge/skills in this domain. This underlying unobserved variable is the rate or theta.
+We start our adventures in Stan with the simplest possible model. After observing the behavior of a Matching Pennies player a certain amount of trials n, we can count how many times (k) the player chooses "head" (or alternatively "tail", whatever is denoted by 1 in the data). This means we are inferring the player's underlying bias for choosing "head".
+By the way, is this exactly the same process (but different outcome variable) as modeling performance (how many k successes out of n trials).
+
+Note that we are not really interested in k. We are interested in the underlying ability of the professor to answer this kind of questions, as a proxy for their knowledge/skills in this domain. This underlying unobserved variable is the rate or theta.
 Theta is of interest because it goes beyond the observed data and allows us to predict, e.g. how many answers would be correct in a new assessment of the professor with a different amount of questions. Analogously, theta allows us to compare this professor's skills with another one's skills even if they answer a different amount of questions.
 
 
