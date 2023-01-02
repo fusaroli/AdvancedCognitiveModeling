@@ -39,9 +39,12 @@ library(tidyverse)
 d <- read_csv("data/MP_MSc_CogSci22.csv") %>% 
   mutate(BotStrategy = as.factor(BotStrategy))
 
-d$Role <- ifelse(d$Role==0, "Matcher", "Mismatcher")
+d$Role <- ifelse(d$Role == 0, "Matcher", "Mismatcher")
 
-ggplot(d, aes(Trial, Payoff, group=BotStrategy, color=BotStrategy)) +geom_smooth(se=F) + theme_classic() + facet_wrap(.~Role)
+ggplot(d, aes(Trial, Payoff, group = BotStrategy, color = BotStrategy)) + 
+  geom_smooth(se = F) + 
+  theme_classic() + 
+  facet_wrap(.~Role)
 
 ```
 
@@ -49,11 +52,12 @@ ggplot(d, aes(Trial, Payoff, group=BotStrategy, color=BotStrategy)) +geom_smooth
 That doesn't look too good, ah? What about individual variability? In the plot below we indicate the score of each of you, against the different bots.
 
 ```{r plot individual performance in MP}
-d1 <- d %>% group_by(ID, BotStrategy) %>% dplyr::summarize(Score = sum(Payoff))
+d1 <- d %>% group_by(ID, BotStrategy) %>% 
+  dplyr::summarize(Score = sum(Payoff))
 
-ggplot(d1, aes(BotStrategy, Score, label=ID)) +
-  geom_point(aes(color=ID)) +
-  geom_boxplot(alpha=0.3) +
+ggplot(d1, aes(BotStrategy, Score, label = ID)) +
+  geom_point(aes(color = ID)) +
+  geom_boxplot(alpha = 0.3) +
   theme_classic()
 
 ```

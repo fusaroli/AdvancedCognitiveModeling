@@ -47,7 +47,9 @@ RandomAgent <- rbinom(trials, 1, rate) # we simply sample randomly from a binomi
 
 # Now let's plot how it's choosing
 d1 <- tibble(trial = seq(trials), choice = RandomAgent)
-p1 <- ggplot(d1, aes(trial, choice)) + geom_line() + theme_classic()
+p1 <- ggplot(d1, aes(trial, choice)) + 
+  geom_line() + 
+  theme_classic()
 p1
 
 # What if we were to compare it to an agent being biased?
@@ -57,7 +59,9 @@ RandomAgent <- rbinom(trials, 1, rate) # we simply sample randomly from a binomi
 
 # Now let's plot how it's choosing
 d2 <- tibble(trial = seq(trials), choice = RandomAgent)
-p2 <- ggplot(d2, aes(trial, choice)) + geom_line() + theme_classic()
+p2 <- ggplot(d2, aes(trial, choice)) + 
+  geom_line() + 
+  theme_classic()
 
 p1 + p2
 
@@ -66,8 +70,15 @@ p1 + p2
 d1$cumulativerate <- cumsum(d1$choice) / seq_along(d1$choice)
 d2$cumulativerate <- cumsum(d2$choice) / seq_along(d2$choice)
 
-p3 <- ggplot(d1, aes(trial, cumulativerate)) + geom_line() + ylim(0,1) + theme_classic()
-p4 <- ggplot(d2, aes(trial, cumulativerate)) + geom_line() + ylim(0,1) + theme_classic()
+p3 <- ggplot(d1, aes(trial, cumulativerate)) + 
+  geom_line() + 
+  ylim(0,1) + 
+  theme_classic()
+
+p4 <- ggplot(d2, aes(trial, cumulativerate)) + 
+  geom_line() + 
+  ylim(0,1) + 
+  theme_classic()
 
 p3 + p4
 
@@ -76,7 +87,10 @@ d1$rate <- 0.5
 d2$rate <- 0.8
 d <- rbind(d1,d2)
 
-p5 <- ggplot(d, aes(trial, cumulativerate, color=rate, group=rate)) + geom_line() + ylim(0,1) + theme_classic()
+p5 <- ggplot(d, aes(trial, cumulativerate, color = rate, group = rate)) + 
+  geom_line() + 
+  ylim(0,1) + 
+  theme_classic()
 p5
 
 # now as a function
@@ -88,14 +102,14 @@ RandomAgent_f <- function(input, rate){
 
 input <- rep(1,trials) # it doesn't matter, it's not taken into account
 choice <- RandomAgent_f(input, rate)
-d3 <- tibble(trial=seq(trials), choice)
+d3 <- tibble(trial = seq(trials), choice)
 ggplot(d3, aes(trial, choice)) + geom_line() + theme_classic()
 
 ## What if there's noise?
 RandomAgentNoise_f <- function(input, rate, noise){
   n <- length(input)
   choice <- rbinom(n, 1, rate)
-  if (rbinom(1, 1, noise)==1){choice = rbinom(1,1,0.5)}
+  if (rbinom(1, 1, noise) == 1) {choice = rbinom(1,1,0.5)}
   return(choice)
 }
 ```
@@ -109,22 +123,22 @@ RandomAgentNoise_f <- function(input, rate, noise){
 
 # as a function
 WSLSAgent_f <- function(prevChoice, Feedback){
-  if (Feedback == 1){
+  if (Feedback == 1) {
     choice = prevChoice
   } else if (Feedback == 0) {
-      choice = 1-prevChoice
+      choice = 1 - prevChoice
       }
   return(choice)
 }
 
 
 WSLSAgentNoise_f <- function(prevChoice, Feedback, noise){
-  if (Feedback == 1){
+  if (Feedback == 1) {
     choice = prevChoice
   } else if (Feedback == 0) {
-      choice = 1-prevChoice
+      choice = 1 - prevChoice
   }
-  if (rbinom(1,1,noise)==1){choice <- rbinom(1,1,.5)}
+  if (rbinom(1, 1, noise) == 1) {choice <- rbinom(1, 1, .5)}
   return(choice)
 }
 
@@ -140,31 +154,31 @@ Self[1] <- RandomAgent_f(1, 0.5)
 Other <- RandomAgent_f(seq(trials), rate)
   
 
-for (i in 2:trials){
-  if (Self[i-1] == Other[i-1]){
+for (i in 2:trials) {
+  if (Self[i - 1] == Other[i - 1]) {
     Feedback = 1
   } else {Feedback = 0}
-  Self[i] <- WSLSAgent_f(Self[i-1], Feedback)
+  Self[i] <- WSLSAgent_f(Self[i - 1], Feedback)
 }
 
 sum(Self == Other)
 
-df <- tibble(Self, Other, trial = seq(trials), Feedback = as.numeric(Self==Other))
+df <- tibble(Self, Other, trial = seq(trials), Feedback = as.numeric(Self == Other))
 
 ggplot(df) + theme_classic() +
-  geom_line(color="red", aes(trial, Self)) +
-  geom_line(color="blue", aes(trial, Other))
+  geom_line(color = "red", aes(trial, Self)) +
+  geom_line(color = "blue", aes(trial, Other))
 
 ggplot(df) + theme_classic() +
-  geom_line(color="red", aes(trial, Feedback)) +
-  geom_line(color="blue", aes(trial, 1-Feedback))
+  geom_line(color = "red", aes(trial, Feedback)) +
+  geom_line(color = "blue", aes(trial, 1 - Feedback))
 
 df$cumulativerateSelf <- cumsum(df$Feedback) / seq_along(df$Feedback)
-df$cumulativerateOther <- cumsum(1-df$Feedback) / seq_along(df$Feedback)
+df$cumulativerateOther <- cumsum(1 - df$Feedback) / seq_along(df$Feedback)
 
 ggplot(df) + theme_classic() +
-  geom_line(color="red", aes(trial, cumulativerateSelf)) +
-  geom_line(color="blue", aes(trial, cumulativerateOther))
+  geom_line(color = "red", aes(trial, cumulativerateSelf)) +
+  geom_line(color = "blue", aes(trial, cumulativerateOther))
 
 # Against a Win-Stay-Lose Shift
 Self <- rep(NA, trials)
@@ -173,12 +187,12 @@ Other <- rep(NA, trials)
 Self[1] <- RandomAgent_f(1, 0.5)
 Other[1] <- RandomAgent_f(1, 0.5)
 
-for (i in 2:trials){
-  if (Self[i-1] == Other[i-1]){
+for (i in 2:trials) {
+  if (Self[i - 1] == Other[i - 1]) {
     Feedback = 1
   } else {Feedback = 0}
-  Self[i] <- WSLSAgent_f(Self[i-1], Feedback)
-  Other[i] <- WSLSAgent_f(Other[i-1], 1-Feedback)
+  Self[i] <- WSLSAgent_f(Self[i - 1], Feedback)
+  Other[i] <- WSLSAgent_f(Other[i - 1], 1 - Feedback)
 }
 
 sum(Self == Other)
