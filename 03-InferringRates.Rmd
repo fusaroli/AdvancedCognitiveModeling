@@ -117,14 +117,14 @@ Let's test things by hand, first. We first sample from the prior and visualize i
 ```{r}
 pacman::p_load(tidyverse)
 
-prior <- tibble(prior=rbeta(1e4, 1, 1))
+prior <- tibble(prior = rbeta(1e4, 1, 1))
 ggplot(prior, aes(prior)) + geom_density() + theme_classic()
 ```
 
 Then we use the sampled prior to generate plausible outcomes.
 
 ```{r}
-pred_outcomes <- tibble(pred_outcomes=rbinom(1e4, 10, prior$prior))
+pred_outcomes <- tibble(pred_outcomes = rbinom(1e4, 10, prior$prior))
 ggplot(pred_outcomes, aes(pred_outcomes)) + geom_density() + theme_classic()
 ```
 
